@@ -5,7 +5,10 @@ const AccountScreen = () => {
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        fetch("http://blog.api/appuser")
+        fetch("http://blog.api/appuser/0", {
+            method: "POST",
+            body : JSON.stringify({with : ['account', 'role']})
+        })
             .then(resp => resp.json())
             .then(json => {json = json.sort(
                 
@@ -21,16 +24,17 @@ const AccountScreen = () => {
         <table className="table">
             <thead>
                 <tr>
-                    <td scope='col' className='fw-bold'>
-                        Pseudonymes
-                    </td>
+                    <th scope='col' className='fw-bold'> Pseudonymes</th>
+                    <th scope='col' className='fw-bold'>Email</th>
+                    <th scope='col' className='fw-bold'>Rôle</th>
                 </tr>
             </thead>
             <tbody>
                 {users.map(user => {
                     return (<tr key={user.Id_appUser} onClick = {() => {navigate(`/appuser/${user.Id_appUser}`)}}>
                         <td>{user.pseudo}</td>
-                        <td></td>
+                        <td>{user.account.email}</td>
+                        <td>{user.role.title}</td>
                     </tr>);
                 })}
             </tbody>
