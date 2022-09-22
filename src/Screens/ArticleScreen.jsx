@@ -8,7 +8,10 @@ const ArticleScreen = () => {
     const navigate = useNavigate();
     
     useEffect( ()=>{
-        fetch('http://blog.api/article')
+        fetch('http://blog.api/article/0', {
+            method : 'POST',
+            body : JSON.stringify({with : ['appuser', 'theme']})
+        })
         .then(response => response.json())
         .then(json => {json = json.sort(
 
@@ -28,13 +31,17 @@ const ArticleScreen = () => {
              <h1> Liste articles </h1>
             <table className='table'>
             <thead>
-                <tr>
+                <tr className = 'fw-bold'>
                     <th scope="col">
                         Titre
+                    </th>
+                    <th scope='col'>
+                        Auteur
                     </th>
                     <th scope="col">
                         Date de publication
                     </th>
+                    <th>Thème</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,7 +50,9 @@ const ArticleScreen = () => {
                     {/* attention à bien emballer navigate dans une fonction sinon la redirection s'effectue automatiquement */}
 
                         <td>{article.title}</td>
+                        <td>{article.appUser.pseudo}</td>
                         <td>{article.created_at}</td>
+                        <td>{article.theme.title}</td>
                     </tr>);
                 })}
 

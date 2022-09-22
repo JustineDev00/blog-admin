@@ -7,7 +7,7 @@ const AccountScreen = () => {
     useEffect(() => {
         fetch("http://blog.api/appuser/0", {
             method: "POST",
-            body : JSON.stringify({with : ['account', 'role']})
+            body : JSON.stringify({with : ['account', 'role', 'article', 'comment']})
         })
             .then(resp => resp.json())
             .then(json => {json = json.sort(

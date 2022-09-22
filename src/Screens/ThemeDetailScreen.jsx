@@ -4,9 +4,12 @@ import { useParams } from 'react-router-dom';
 const ThemeDetailScreen = () => {
     const {id} = useParams();
 
-    const[theme, setTheme] = useState();
+    const[theme, setTheme] = useState(null);
     useEffect( ()=>{
-        fetch('http://blog.api/theme/'+id)
+        fetch('http://blog.api/theme/'+id, {
+            method : 'POST',
+            body : JSON.stringify({with : ['article']})
+        })
         .then(resp => resp.json())
         .then(json => setTheme(json));
     },
@@ -36,7 +39,12 @@ const ThemeDetailScreen = () => {
                 </tbody>
 
             </table>
-
+            <h3>Liste des articles</h3>
+            <ul>
+                {theme?.articles_list?.map(article =>{
+                    return <li key={article.Id_article}><span className='me-3'>{article.title}</span> <span>publié le: {new Date(article.created_at).toLocaleString()}</span></li>
+                })}
+            </ul>
 
 
         </div>
