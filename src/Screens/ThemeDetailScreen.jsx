@@ -6,10 +6,7 @@ const ThemeDetailScreen = () => {
 
     const[theme, setTheme] = useState(null);
     useEffect( ()=>{
-        fetch('http://blog.api/theme/'+id, {
-            method : 'POST',
-            body : JSON.stringify({with : ['article']})
-        })
+        fetch('http://blog.api/themeDetail/'+id,)
         .then(resp => resp.json())
         .then(json => setTheme(json));
     },
@@ -45,13 +42,15 @@ const ThemeDetailScreen = () => {
                     <tr>
                         <th className='px-2'>Titre</th>
                         <th className='px-2'>Publié le</th>
+                        <th className='px-2'>Par:</th>
                     </tr>
                 </thead>
                 <tbody>
                    {theme?.articles_list?.map(article=>{
                         return <tr>
                             <td className='px-2'>{article.title}</td>
-                            <td className='px-2'>{new Date(article.created_at).toLocaleString()}</td></tr>
+                            <td className='px-2'>{new Date(article.created_at).toLocaleString()}</td>
+                            <td className='px-2'>{article.appUser.pseudo}</td></tr>
                         
                     })}
                 </tbody>
