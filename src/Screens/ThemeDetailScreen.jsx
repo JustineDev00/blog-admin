@@ -19,7 +19,7 @@ const ThemeDetailScreen = () => {
     
     return (
         <div>
-            <h1>
+            <h1 className='px-2'>
                 Détail du thème : {theme?.title}
             </h1>
             <table className='table'>
@@ -33,18 +33,29 @@ const ThemeDetailScreen = () => {
                     <tr>
                         <td>{theme?.title}</td>
                         <td>
-                            <img src={theme?.img_src +'.jpeg'} alt={theme?.title}></img>
+                            <img src={theme?.img_src +'.jpeg'} alt={theme?.title} className='small-img'></img>
                             {theme?.image}</td>
                     </tr>
                 </tbody>
 
             </table>
-            <h3>Liste des articles</h3>
-            <ul>
-                {theme?.articles_list?.map(article =>{
-                    return <li key={article.Id_article}><span className='me-3'>{article.title}</span> <span>publié le: {new Date(article.created_at).toLocaleString()}</span></li>
-                })}
-            </ul>
+            <h3 className='px-2'>Liste des articles</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th className='px-2'>Titre</th>
+                        <th className='px-2'>Publié le</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {theme?.articles_list?.map(article=>{
+                        return <tr>
+                            <td className='px-2'>{article.title}</td>
+                            <td className='px-2'>{new Date(article.created_at).toLocaleString()}</td></tr>
+                        
+                    })}
+                </tbody>
+            </table>
 
 
         </div>

@@ -7,7 +7,10 @@ const TagDetailScreen = () => {
     const [tag, setTag] = useState(null);
 
     useEffect(() => {
-        fetch(`http://blog.api/tag/`+id)
+        fetch(`http://blog.api/tag/`+id, {
+            method : 'POST',
+            body : JSON.stringify({with : [{article : 'article_tag'}]})
+        })
         .then(resp => resp.json())
         .then (json => {setTag(json)});
 
@@ -18,6 +21,26 @@ const TagDetailScreen = () => {
     return (
         <>
             <h1>Détail du mot-clé : {tag?.title}</h1>
+           
+           <h3>Liste des articles avec ce mot-clé: </h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th className='px-2'>Titre</th>
+                        <th className='px-2'>Publié le</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {tag?.articles_list?.map(article=>{
+                        return <tr>
+                            <td className='px-2'>{article.title}</td>
+                            <td className='px-2'>{new Date(article.created_at).toLocaleString()}</td></tr>
+                        
+                    })}
+                </tbody>
+            </table>
+
+
         </>
     );
 };

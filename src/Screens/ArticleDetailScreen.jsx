@@ -10,7 +10,7 @@ const ArticleDetailScreen = () => {
     useEffect( () => {
         fetch('http://blog.api/article/'+id, {
             method : 'POST',
-            body : JSON.stringify({with : ['appuser', 'theme', 'image', 'comment']})
+            body : JSON.stringify({with : ['appuser', 'theme', 'image', 'comment', {tag : 'article_tag'}]})
 
         })
         .then(resp => resp.json())
@@ -21,40 +21,23 @@ const ArticleDetailScreen = () => {
 
 
     return (
-        <div>
+        <div className='mx-3'>
             <h1>Détails de l'article : {article?.title}</h1>
 
-            <table className='table'>
-                <thead>
-                    <tr>
-                        <th>
-                            Titre
-                        </th>
-
-                        <th>
-                            Date de publication
-                        </th>
-                        <th>Auteur</th>
-                        <th>Thème</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{article?.title} </td>
-
-                        <td> {article?.created_at}</td>
-                        <td>{article?.appUser?.pseudo}</td>
-                        <td>{article?.theme?.title}</td>
-                    </tr>
-                </tbody>
-
-            </table>
-
-            <h5>Contenu de l'article</h5>
-            <div className='p-2'> {article?.content}</div>
+            <div className='d-flex flex-row'>
+            <p className='me-1 mb-0'>Publié le : {article?.created_at}</p> <p className='me-1 mb-0'>par  {article?.appUser?.pseudo}</p>
+            <p className="me-2 mb-0">dans  {article?.theme?.title}</p>
+            </div>
+            <div>
+                {article?.tags_list.map(tag=> {
+                    return <span class="badge bg-secondary me-2">{tag.title}</span>
+                })}
+            </div>
+           
+            <div> {article?.content}</div>
             <div>
                 {article?.images_list.map(image =>
-                     <img key={image.Id_image} src={image.src} alt={image.alt}/>)}
+                     <img key={image.Id_image} src={image.src} alt={image.alt} />)}
             
             </div>
             <h5>Commentaires:</h5>
