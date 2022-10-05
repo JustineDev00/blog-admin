@@ -34,7 +34,7 @@ const ThemeScreen = () => {
                 {theme.map(theme => {
                     return (<tr key={theme.Id_theme}  onClick = {()=> {navigate(`/theme/${theme.Id_theme}`)}}>
                         <td>{theme.title}</td>
-                        <td></td>
+                        <td>{theme.img_src ? <img src={theme.img_src} alt={theme.title} style={{height: '240px'}} /> : "pas d'image"}</td>
                     </tr>);
                 })}
             </tbody>
